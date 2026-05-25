@@ -1,0 +1,77 @@
+{
+  "controls": [
+    {
+      "type": "toggle",
+      "label": "LED1",
+      "command": "led1",
+      "default": false
+    },
+    {
+      "type": "slider",
+      "label": "PWM Duty",
+      "command": "pwm",
+      "min": 0,
+      "max": 100,
+      "defaultInt": 50,
+      "unit": "%"
+    },
+{
+  "type": "slider",
+  "label": "Voltage Set",
+  "command": "volt",
+  "minFloat": 0.0,
+  "maxFloat": 5.0,
+  "defaultFloat": 3.3,
+  "step": 0.1,
+  "decimals": 1,
+  "unit": "V"
+},
+    {
+      "type": "button",
+      "label": "Reset Device",
+      "command": "reset",
+      "buttonText": "Reset"
+    },
+    {
+      "type": "input",
+      "label": "Device Name",
+      "command": "name",
+      "defaultText": "STM32"
+    },
+    {
+      "type": "select",
+      "label": "Operation Mode",
+      "command": "mode",
+      "options": [
+        { "label": "Auto", "value": "auto" },
+        { "label": "Manual", "value": "manual" }
+      ],
+      "defaultOption": "auto"
+    },
+    {
+      "type": "number",
+      "label": "Voltage Setpoint",
+      "command": "voltage",
+      "minFloat": 0.0,
+      "maxFloat": 5.0,
+      "defaultFloat": 3.3,
+      "unit": "V"
+    },
+    {
+      "type": "color",
+      "label": "RGB LED",
+      "command": "rgb",
+      "defaultColor": "#FF0000"
+    },
+    {
+      "type": "sync",
+      "label": "Motor Speed",
+      "command": "motor",
+      "variable": "motor_fb",
+      "unit": "RPM"
+    }
+  ],
+  "monitors": [
+   
+  ]
+}
