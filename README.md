@@ -49,6 +49,7 @@ Written in **C# / WPF (.NET 8)** with hardware acceleration and ultra-low latenc
 ┌─────────────────────────────────────────────────────────────────────────────────┐
 │                        Target Hardware (STM32, ESP32, etc.)                     │
 └─────────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -114,7 +115,7 @@ Stream outputs from your microcontroller using serial print statements:
 *   **IDE:** Visual Studio 2022
 
 ### Repository Structure
-text
+```text
 ├── SerialDebugPanel.sln
 ├── repo/                      <-- Place screenshots here
 │   ├── main_dashboard.png
@@ -127,6 +128,7 @@ text
     └── Models/
         ├── ControlItem.cs           <-- OOP structure for interactive commands
         └── MonitorItem.cs           <-- OOP structure for indicator sensors
+```
 
 ### Running the Application
 1. Clone the project:
@@ -152,3 +154,4 @@ Have ideas for complex widgets (like 3D Attitude indicators or customizable mapp
 
 ## 📄 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```
