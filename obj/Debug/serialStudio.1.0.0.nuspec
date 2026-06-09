@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>serialStudio</id>
+    <version>1.0.0</version>
+    <authors>serialStudio</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="b445af1a740a7100ced38e7892efcb45f8b486ee" />
+    <dependencies>
+      <group targetFramework="net9.0-windows7.0">
+        <dependency id="Newtonsoft.Json" version="13.0.4" exclude="Build,Analyzers" />
+        <dependency id="System.IO.Ports" version="10.0.8" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net9.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WPF" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="D:\Ehsan\serial-dashboard-studio\bin\Debug\net9.0-windows\serialStudio.runtimeconfig.json" target="lib\net9.0-windows7.0\serialStudio.runtimeconfig.json" />
+    <file src="D:\Ehsan\serial-dashboard-studio\bin\Debug\net9.0-windows\serialStudio.dll" target="lib\net9.0-windows7.0\serialStudio.dll" />
+  </files>
+</package>

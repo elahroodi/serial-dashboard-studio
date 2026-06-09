@@ -260,10 +260,10 @@ namespace SerialDebugPanel.Widgets
                         _rows.RemoveAt(0);
                     }
 
-                    if (_rows.Count > 0)
-                    {
-                        _dataGrid.ScrollIntoView(_rows[_rows.Count - 1]);
-                    }
+                    //if (_rows.Count > 0)
+                    //{
+                    //    _dataGrid.ScrollIntoView(_rows[_rows.Count - 1]);
+                    //}
                 });
             }
         }

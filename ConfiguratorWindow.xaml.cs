@@ -157,7 +157,6 @@ namespace SerialDebugPanel
             }
         }
 
-        // عملکرد بارگذاری یک فایل جهت ویرایش تعاملی
         private void BtnLoadConfig_Click(object sender, RoutedEventArgs e)
         {
             if (cmbConfigFiles.SelectedItem == null) return;
@@ -192,6 +191,9 @@ namespace SerialDebugPanel
                         }
                         monitorList.Add(monitor);
                     }
+
+                    // ✅ ذخیره مسیر فایل جاری برای ذخیرهٔ مستقیم بعدی
+                    _currentConfigFilePath = filePath;
 
                     MessageBox.Show($"Configuration '{fileName}' loaded successfully for editing!", "Loaded", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -400,11 +402,14 @@ namespace SerialDebugPanel
                 monitorList.Remove((MonitorItem)dgMonitors.SelectedItem);
             }
         }
+        private string _currentConfigFilePath = null;
+
 
         private void BtnSaveJson_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                // ساخت JSON نهایی
                 var finalConfig = new RootConfig();
                 foreach (var item in controlList) finalConfig.Controls.Add(item);
                 foreach (var item in monitorList) finalConfig.Monitors.Add(item);
@@ -417,21 +422,43 @@ namespace SerialDebugPanel
 
                 string jsonOutput = JsonSerializer.Serialize(finalConfig, options);
 
-                // مقدار دهی اولیه آدرس پوشه Configs برای ذخیره
-                string selectedFile = cmbConfigFiles.SelectedItem?.ToString() ?? "device_config.json";
-
-                var saveFileDialog = new Microsoft.Win32.SaveFileDialog
+                // اگر قبلاً فایلی بارگذاری شده باشد، فقط تأیید Yes/No می‌گیریم
+                if (!string.IsNullOrEmpty(_currentConfigFilePath))
                 {
-                    InitialDirectory = _configsFolder,
-                    Filter = "JSON Files (*.json)|*.json",
-                    FileName = selectedFile
-                };
+                    var result = MessageBox.Show(
+                        $"Save changes to \"{System.IO.Path.GetFileName(_currentConfigFilePath)}\"?",
+                        "Confirm Save",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question);
 
-                if (saveFileDialog.ShowDialog() == true)
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        File.WriteAllText(_currentConfigFilePath, jsonOutput);
+                        MessageBox.Show("Configuration successfully saved!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        RefreshConfigFilesList();
+                    }
+                    // اگر No بزند، هیچ اتفاقی نمی‌افتد
+                }
+                else
                 {
-                    File.WriteAllText(saveFileDialog.FileName, jsonOutput);
-                    MessageBox.Show("Configuration successfully saved!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    RefreshConfigFilesList();
+                    // در غیر این صورت پنجرهٔ ذخیره باز می‌شود
+                    string selectedFile = cmbConfigFiles.SelectedItem?.ToString() ?? "device_config.json";
+
+                    var saveFileDialog = new Microsoft.Win32.SaveFileDialog
+                    {
+                        InitialDirectory = _configsFolder,
+                        Filter = "JSON Files (*.json)|*.json",
+                        FileName = selectedFile
+                    };
+
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        File.WriteAllText(saveFileDialog.FileName, jsonOutput);
+                        MessageBox.Show("Configuration successfully saved!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        // مسیر جدید را برای دفعات بعد ذخیره کن
+                        _currentConfigFilePath = saveFileDialog.FileName;
+                        RefreshConfigFilesList();
+                    }
                 }
             }
             catch (Exception ex)
@@ -550,17 +577,61 @@ namespace SerialDebugPanel
             LoadItemToForm(dgMonitors.SelectedItem);
         }
 
-        private void BtnEditSelected_Click(object sender, RoutedEventArgs e)
-        {
-            if (cmbCategory.SelectedIndex == 0)
-                LoadItemToForm(dgControls.SelectedItem);
-            else
-                LoadItemToForm(dgMonitors.SelectedItem);
-        }
+       
 
         private void BtnCancelEdit_Click(object sender, RoutedEventArgs e)
         {
             ResetFormState();
         }
+        private void MoveControlUp(object sender, RoutedEventArgs e)
+        {
+            var item = dgControls.SelectedItem as ControlItem;
+            if (item == null) return;
+
+            int index = controlList.IndexOf(item);
+            if (index <= 0) return;
+
+            controlList.Move(index, index - 1);
+            dgControls.SelectedItem = item;
+        }
+
+        private void MoveControlDown(object sender, RoutedEventArgs e)
+        {
+            var item = dgControls.SelectedItem as ControlItem;
+            if (item == null) return;
+
+            int index = controlList.IndexOf(item);
+            if (index < 0 || index >= controlList.Count - 1) return;
+
+            controlList.Move(index, index + 1);
+            dgControls.SelectedItem = item;
+        }
+
+        private void MoveMonitorUp(object sender, RoutedEventArgs e)
+        {
+            var item = dgMonitors.SelectedItem as MonitorItem;
+            if (item == null) return;
+
+            int index = monitorList.IndexOf(item);
+            if (index <= 0) return;
+
+            monitorList.Move(index, index - 1);
+            dgMonitors.SelectedItem = item;   // انتخاب را حفظ کن
+        }
+
+        private void MoveMonitorDown(object sender, RoutedEventArgs e)
+        {
+            var item = dgMonitors.SelectedItem as MonitorItem;
+            if (item == null) return;
+
+            int index = monitorList.IndexOf(item);
+            if (index < 0 || index >= monitorList.Count - 1) return;
+
+            monitorList.Move(index, index + 1);
+            dgMonitors.SelectedItem = item;   // انتخاب را حفظ کن
+        }
+
+
+
     }
 }

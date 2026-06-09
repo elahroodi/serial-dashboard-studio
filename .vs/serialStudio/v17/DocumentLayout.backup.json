@@ -1,0 +1,84 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Ehsan\\serial-dashboard-studio\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6525B042-1CFD-4E83-A8F4-391ED9B7CA19}|serialStudio.csproj|d:\\ehsan\\serial-dashboard-studio\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{6525B042-1CFD-4E83-A8F4-391ED9B7CA19}|serialStudio.csproj|solutionrelative:readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6525B042-1CFD-4E83-A8F4-391ED9B7CA19}|serialStudio.csproj|d:\\ehsan\\serial-dashboard-studio\\configuratorwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6525B042-1CFD-4E83-A8F4-391ED9B7CA19}|serialStudio.csproj|solutionrelative:configuratorwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6525B042-1CFD-4E83-A8F4-391ED9B7CA19}|serialStudio.csproj|d:\\ehsan\\serial-dashboard-studio\\configuratorwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6525B042-1CFD-4E83-A8F4-391ED9B7CA19}|serialStudio.csproj|solutionrelative:configuratorwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6525B042-1CFD-4E83-A8F4-391ED9B7CA19}|serialStudio.csproj|d:\\ehsan\\serial-dashboard-studio\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6525B042-1CFD-4E83-A8F4-391ED9B7CA19}|serialStudio.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ConfiguratorWindow.xaml.cs",
+              "DocumentMoniker": "D:\\Ehsan\\serial-dashboard-studio\\ConfiguratorWindow.xaml.cs",
+              "RelativeDocumentMoniker": "ConfiguratorWindow.xaml.cs",
+              "ToolTip": "D:\\Ehsan\\serial-dashboard-studio\\ConfiguratorWindow.xaml.cs",
+              "RelativeToolTip": "ConfiguratorWindow.xaml.cs",
+              "ViewState": "AgIAABoCAAAAAAAAAAAAwDYCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-26T19:29:55.927Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ConfiguratorWindow.xaml",
+              "DocumentMoniker": "D:\\Ehsan\\serial-dashboard-studio\\ConfiguratorWindow.xaml",
+              "RelativeDocumentMoniker": "ConfiguratorWindow.xaml",
+              "ToolTip": "D:\\Ehsan\\serial-dashboard-studio\\ConfiguratorWindow.xaml",
+              "RelativeToolTip": "ConfiguratorWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-26T19:29:46.473Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "README.md",
+              "DocumentMoniker": "D:\\Ehsan\\serial-dashboard-studio\\README.md",
+              "RelativeDocumentMoniker": "README.md",
+              "ToolTip": "D:\\Ehsan\\serial-dashboard-studio\\README.md",
+              "RelativeToolTip": "README.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-05-26T05:48:49.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\Ehsan\\serial-dashboard-studio\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "D:\\Ehsan\\serial-dashboard-studio\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-25T15:22:12.351Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

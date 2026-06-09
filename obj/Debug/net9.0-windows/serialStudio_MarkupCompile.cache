@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Ehsan\Monitoring\serialStudio\obj\Debug\net9.0-windows\
+D:\Ehsan\serial-dashboard-studio\obj\Debug\net9.0-windows\
 serialStudio
 none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-D:\Ehsan\Monitoring\serialStudio\App.xaml
-3-1114591102
+D:\Ehsan\serial-dashboard-studio\App.xaml
+41945858595
 
-29-566191986
-2021156522897
-ConfiguratorWindow.xaml;MainWindow.xaml;ProjectManagerWindow.xaml;
+30-2135002806
+202-1480831478
+CodeGeneratorWindow.xaml;ConfiguratorWindow.xaml;MainWindow.xaml;ProjectManagerWindow.xaml;
 
 False
 

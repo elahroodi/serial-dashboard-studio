@@ -31,6 +31,32 @@
             </Setter>
         </Style>
 
+        <!-- استایل دکمه بنفش ژنراتور کد -->
+        <Style x:Key="PurpleButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#8B5CF6"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#7C3AED"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#6D28D9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!-- استایل دکمه ژنراتور -->
         <Style x:Key="GeneratorButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#10B981"/>
@@ -180,6 +206,7 @@
                     <ColumnDefinition Width="170"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
@@ -197,12 +224,19 @@
                         Style="{StaticResource ProfileButtonStyle}" Click="ActiveProfileBtn_Click"/>
 
                 <!-- دکمه کانکت -->
-                <Button x:Name="ConnectButton" Grid.Column="6" Content="Connect" Width="95" Height="32" 
-                        Background="#2563EB" Style="{StaticResource ConnectButtonStyle}" Click="ConnectButton_Click"/>
+<Button x:Name="ConnectButton" Grid.Column="6" Content="Connect" Width="95" Height="32" 
+        Background="#2563EB" Style="{StaticResource ConnectButtonStyle}" Click="ConnectButton_Click"
+        Margin="0,0,10,0"/>
 
-                <!-- دکمه پیکربند/ژنراتور -->
-                <Button x:Name="GeneratorButton" Grid.Column="7" Content="Manage Interface" Width="125" Height="32" Margin="10,0,0,0"
-                        Style="{StaticResource GeneratorButtonStyle}" Click="GeneratorButton_Click"/>
+<!-- دکمه پیکربند/ژنراتور -->
+<Button x:Name="DesignerButton" Grid.Column="7" Content="Manage Interface" Width="125" Height="32"
+        Style="{StaticResource GeneratorButtonStyle}" Click="DesignerButton_Click"
+        Margin="0,0,10,0"/>
+
+<!-- دکمه جدید Generate Code -->
+<Button x:Name="GenerateCodeButton" Grid.Column="8" Content="Generate Code" Width="110" Height="32" 
+        Style="{StaticResource PurpleButtonStyle}" Click="GenerateCodeButton_Click"
+        Margin="0,0,10,0"/>
             </Grid>
         </Border>
 
@@ -224,7 +258,9 @@
                     <TextBlock Text="Live Monitors" FontSize="15" FontWeight="Bold" Foreground="#1E293B"/>
                 </StackPanel>
 
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer x:Name="MonitorScrollViewer"
+              Grid.Row="1"
+              VerticalScrollBarVisibility="Auto">
                     <Border Background="#FFFFFF" CornerRadius="8" BorderBrush="#E2E8F0" BorderThickness="1" Padding="14">
                         <Border.Effect>
                             <DropShadowEffect Color="#0F172A" BlurRadius="12" ShadowDepth="2" Opacity="0.03"/>
@@ -245,7 +281,9 @@
                     <TextBlock Text="Controls / Commands" FontSize="15" FontWeight="Bold" Foreground="#1E293B"/>
                 </StackPanel>
 
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer x:Name="MonitorScrollViewer2"
+              Grid.Row="1"
+              VerticalScrollBarVisibility="Auto">
                     <Border Background="#FFFFFF" CornerRadius="8" BorderBrush="#E2E8F0" BorderThickness="1" Padding="14">
                         <Border.Effect>
                             <DropShadowEffect Color="#0F172A" BlurRadius="12" ShadowDepth="2" Opacity="0.03"/>

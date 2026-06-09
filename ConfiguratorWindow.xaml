@@ -209,7 +209,11 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <!-- دکمه‌های جابه‌جایی کنترل‌ها -->
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <!-- دکمه‌های جابه‌جایی مانیتورها -->
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
@@ -227,7 +231,7 @@
                 </Grid>
             </Border>
 
-            <!-- لیست کنترل‌ها مجهز به رویداد دبل کلیک جهت ادیت سریع -->
+            <!-- لیست کنترل‌ها -->
             <GroupBox Header="Configured Controls (Double-click or click row to load and edit)" Grid.Row="1" Margin="0,0,0,6" Foreground="#1E293B" FontWeight="Bold" BorderBrush="#E2E8F0">
                 <DataGrid x:Name="dgControls" AutoGenerateColumns="False" CanUserAddRows="False" 
                           Background="White" BorderThickness="0" GridLinesVisibility="Horizontal" RowHeight="32" 
@@ -294,8 +298,14 @@
                 </DataGrid>
             </GroupBox>
 
-            <!-- لیست مانیتورها مجهز به رویداد دبل کلیک جهت ادیت سریع -->
-            <GroupBox Header="Configured Monitors (Double-click or click row to load and edit)" Grid.Row="2" Margin="0,6,0,0" Foreground="#1E293B" FontWeight="Bold" BorderBrush="#E2E8F0">
+            <!-- دکمه‌های جابه‌جایی برای لیست کنترل‌ها -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,4">
+                <Button Content="▲ Up" Click="MoveControlUp" Width="80" Style="{StaticResource SecondaryButton}" Margin="4"/>
+                <Button Content="▼ Down" Click="MoveControlDown" Width="80" Style="{StaticResource SecondaryButton}" Margin="4"/>
+            </StackPanel>
+
+            <!-- لیست مانیتورها -->
+            <GroupBox Header="Configured Monitors (Double-click or click row to load and edit)" Grid.Row="3" Margin="0,6,0,0" Foreground="#1E293B" FontWeight="Bold" BorderBrush="#E2E8F0">
                 <DataGrid x:Name="dgMonitors" AutoGenerateColumns="False" CanUserAddRows="False" 
                           Background="White" BorderThickness="0" GridLinesVisibility="Horizontal" RowHeight="32" 
                           HeadersVisibility="Column" RowDetailsVisibilityMode="VisibleWhenSelected"
@@ -316,13 +326,11 @@
                                         <TextBlock Text="{Binding Columns.Count}" FontWeight="SemiBold" Foreground="#0F172A" Margin="0,2,0,0"/>
                                     </StackPanel>
 
-                                    <!-- نمایش جزئیات کامل نگاشت بیت‌های LED -->
                                     <StackPanel Margin="0,0,24,0" Visibility="{Binding Names, Converter={StaticResource NullToCollapsing}}">
                                         <TextBlock Text="LED Bit-Mapping (State Names):" FontWeight="Bold" Foreground="#64748B" FontSize="10"/>
                                         <TextBlock Text="{Binding Names.Count, StringFormat='\{0\} bits defined'}" FontWeight="SemiBold" Foreground="#2563EB" Margin="0,2,0,0"/>
                                     </StackPanel>
 
-                                    <!-- نمایش جزئیات کامل فلگ‌های آلارم -->
                                     <StackPanel Margin="0,0,24,0" Visibility="{Binding Alarms, Converter={StaticResource NullToCollapsing}}">
                                         <TextBlock Text="Alarm Map Configuration:" FontWeight="Bold" Foreground="#64748B" FontSize="10"/>
                                         <TextBlock Text="{Binding Alarms.Count, StringFormat='\{0\} alarms defined'}" FontWeight="SemiBold" Foreground="#EF4444" Margin="0,2,0,0"/>
@@ -334,8 +342,14 @@
                 </DataGrid>
             </GroupBox>
 
+            <!-- دکمه‌های جابه‌جایی برای لیست مانیتورها (جدید) -->
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,4">
+                <Button Content="▲ Up" Click="MoveMonitorUp" Width="80" Style="{StaticResource SecondaryButton}" Margin="4"/>
+                <Button Content="▼ Down" Click="MoveMonitorDown" Width="80" Style="{StaticResource SecondaryButton}" Margin="4"/>
+            </StackPanel>
+
             <!-- دکمه‌های پایانی پایینی -->
-            <Grid Grid.Row="3" Margin="0,12,0,0">
+            <Grid Grid.Row="5" Margin="0,12,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -344,7 +358,6 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0" Content="Remove Selected Row" Click="BtnDelete_Click" Style="{StaticResource DangerButton}" Width="180"/>
-                <Button Grid.Column="2" Content="Edit Selected Row" Click="BtnEditSelected_Click" Style="{StaticResource AccentButton}" Width="160" Margin="0,0,10,0"/>
                 <Button Grid.Column="3" Content="Save Configuration (JSON)" Click="BtnSaveJson_Click" Style="{StaticResource SuccessButton}" Width="220" FontWeight="Bold"/>
             </Grid>
         </Grid>
