@@ -1,129 +1,157 @@
 # 🚀 Universal Serial Dashboard (USD)
 
-A powerful, highly-configurable, and interactive serial terminal for embedded systems and IoT. Design, build, and customize real-time control and monitoring dashboards on the fly! Written in C# with a modern WPF interface.
+A powerful, highly-configurable, and interactive serial terminal for embedded systems and IoT. **Design, build, customize, and edit** real-time control and monitoring dashboards on the fly using a fully visual creator interface—no manual JSON editing required!
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Framework](https://img.shields.io/badge/Framework-.NET%208.0%20%7C%20WPF-blue.svg)](https://dotnet.microsoft.com/)
-[![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)]()
+Written in **C# / WPF (.NET 8)** with hardware acceleration and ultra-low latency parsing.
+
+---
+
+## 📸 Dashboards & Interface Preview
+
+| Main Operating Dashboard | Visual UI Designer & Configurator |
+| :---: | :---: |
+| <img src="repo/main_dashboard.png" width="100%" alt="Main Dashboard Placeholder"/> | <img src="repo/configurator_window.png" width="100%" alt="UI Configurator Window Placeholder"/> |
+| *Active control sliders, real-time gauges, charts, and table logs.* | *The live visual WYSIWYG editor loaded with custom controls.* |
 
 ---
 
 ## 🌟 Key Features
 
-*   **Dynamic UI Generation:** No hardcoding! The entire dashboard is rendered on the fly from simple `.json` configuration files inside the `configs/` folder.
-*   **Real-Time Data Visualization:** Monitor your hardware using high-performance charts, gauges, custom tables, LED registers, status alarms, and rich terminal logs.
-*   **Interactive Controls:** Send precise commands using custom switches, sliders (integer/float), text/number inputs, dropdowns, color pickers, and synchronized control-loop faders.
-*   **Zero-Overhead Parsing:** Ultra-fast serial stream parsing optimized for high-baudrate communication (up to 921600 bps and beyond) without UI freezing.
-*   **WPF-Powered UX:** Modern, clean, and hardware-accelerated user interface.
+*   **⚡ On-The-Fly Visual Layout Builder:** Use the built-in **Configurator Tool** to add, remove, and edit widgets on a live list. No need to touch JSON files manually.
+*   **🔄 Live Dynamic UI Parsing:** Double-click any active control or monitor in the designer to load its entire config back into the form, modify parameters, and update instantly.
+*   **📈 Advanced Monitoring Widgets:**
+    *   *Real-time charts* for ADC and sensor streams.
+    *   *Radial & Linear Gauges* for battery, speed, or level tracking.
+    *   *GPIO Bit-Mapped LEDs* to preview raw register states (e.g., active high/low bits).
+    *   *Fault Alarms* triggered directly by microcontrollers using bitmasks or error codes.
+    *   *Multi-column Tables* designed specifically for high-speed IMU ($a_x, a_y, a_z$) data.
+*   **🎛 Extensive Hardware Controls:** Toggle switches, Integer/Float sliders (with customizable decimal step resolution), dropdown selectors, custom command triggers, and color pickers.
+*   **🔗 Closed-Loop Sync Widgets:** Cross-linked widgets (`sync`) that automatically map outgoing commands with incoming variables for tight real-time control feedback loops.
 
 ---
 
-## 🛠 Dynamic UI Architecture (`configs/config.json`)
+## 🏗 System Architecture & Configuration Flow
 
-The application automatically reads its UI structure from a JSON file. Below is a complete configuration template demonstrating all available components:
-
-```json
-{
-  "controls": [
-    { "type": "toggle", "label": "LED1", "command": "led1", "default": false },
-    { "type": "slider", "label": "PWM Duty", "command": "pwm2", "min": 0, "max": 100, "defaultInt": 50, "unit": "%" },
-    { "type": "slider", "label": "Voltage Set", "command": "volt", "unit": "V", "minFloat": 0, "maxFloat": 5, "defaultFloat": 3.3, "step": 0.1, "decimals": 1 },
-    { "type": "button", "label": "Reset Device", "command": "reset", "buttonText": "Reset" },
-    { "type": "input", "label": "Device Name", "command": "name", "defaultText": "STM32" },
-    { "type": "select", "label": "Operation Mode", "command": "mode", "options": [{ "label": "Auto", "value": "auto" }, { "label": "Manual", "value": "manual" }], "defaultOption": "auto" },
-    { "type": "number", "label": "Voltage Setpoint", "command": "voltage", "unit": "V", "minFloat": 0, "maxFloat": 5, "defaultFloat": 3.3 },
-    { "type": "color", "label": "RGB LED", "command": "rgb", "defaultColor": "#FF0000" },
-    { "type": "sync", "label": "Motor Speed", "command": "motor", "unit": "RPM", "variable": "motor_fb" }
-  ],
-  "monitors": [
-    { "type": "log", "label": "Debug Log", "variable": "log" },
-    { "type": "alarm", "label": "System Alarms Panel", "variable": "Alarm", "alarms": { "1": "Over Temp", "2": "Over Volt", "3": "Low Batt", "4": "Fan Fail", "5": "Sensor Err" } },
-    { "type": "chart", "label": "ADC Value", "variable": "adc", "unit": "mV" },
-    { "type": "text", "label": "Temperature", "variable": "temp", "unit": "°C", "warningThreshold": 45, "criticalThreshold": 60 },
-    { "type": "led", "label": "GPIO Register Port A", "variable": "ready", "names": { "0": "PWR", "1": "RUN", "2": "ERR", "3": "TX", "4": "RX", "5": "U1", "6": "U2", "7": "U3" } },
-    { "type": "gauge", "label": "Battery Level", "variable": "battery" },
-    { "type": "table", "label": "IMU Data", "variable": "imu", "columns": [ "ax", "ay", "az" ] }
-  ]
-}
+```
+┌────────────────────────┐         Reads / Saves         ┌────────────────────────┐
+│  WPF Configurator UI   │ ────────────────────────────> │  configs/devices.json  │
+│  (Add/Edit/Delete List)│ <──────────────────────────── │   (JSON Configuration) │
+└────────────────────────┘                               └────────────────────────┘
+            │                                                         │
+            │ Modifies Layout                                         │ Renders Dashboard
+            ▼                                                         ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                           Universal Serial Dashboard                            │
+└─────────────────────────────────────────────────────────────────────────────────┘
+         ▲                                                                 │
+         │ Stream Parser (key=value\n)                                     │ Serial Command
+         │                                                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                        Target Hardware (STM32, ESP32, etc.)                     │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 📡 Serial Protocol Specifications
+## 📡 Serial Protocol Reference
 
-Communication is entirely text-based (`ASCII`), using a simple `key=value\n` format.
+The terminal uses a robust, high-frequency, lightweight communication protocol over ASCII: `key=value\n`.
 
-### 1. Control Protocol (Host to Device)
-When you interact with the UI, the application sends the following payloads over the serial port:
+### 1. Host Control Transmission (WPF ➔ Hardware)
 
-| UI Control | Type | Output Format (Sent over Serial) | Example |
+When interacting with dashboard widgets, the host controller writes ASCII frames directly to the Serial Ring Buffer:
+
+| Component Type | Sub-type / Data Type | Serial Output Format | Example Payload |
 | :--- | :--- | :--- | :--- |
-| **Toggle** | Boolean | `[command]=[1 or 0]\n` | `led1=1\n` |
-| **Slider (Int)** | Integer | `[command]=[integer]\n` | `pwm2=33\n` |
-| **Slider (Float)** | Float | `[command]=[float]\n` | `volt=3.3\n` |
-| **Button** | Trigger | `[command]=1\n` | `reset=1\n` |
-| **Input** | String | `[command]=[text]\n` | `name=STM32\n` |
-| **Select** | Dropdown | `[command]=[option_value]\n` | `mode=auto\n` |
-| **Number** | Float/Int | `[command]=[value]\n` | `voltage=3.3\n` |
-| **Color** | Hex String| `[command]=[HEX]\n` | `rgb=#FF0000\n` |
-| **Sync** | Slider + FB| `[command]=[value]\n` | `motor=1500\n` |
+| **Toggle** | Boolean State | `[command]=[1 or 0]\n` | `led1=1\n` |
+| **Slider** | Integer Range | `[command]=[integer]\n` | `pwm2=33\n` |
+| **Slider / Number** | Floating Point | `[command]=[float]\n` | `volt=3.30\n` |
+| **Button** | Trigger Pulse | `[command]=1\n` | `reset=1\n` |
+| **Input** | Custom Text | `[command]=[text]\n` | `name=STM32_NodeA\n` |
+| **Select** | Dropdown Enum | `[command]=[value]\n` | `mode=manual\n` |
+| **Color** | HEX Color Code | `[command]=[hex_code]\n` | `rgb=#FF0000\n` |
+| **Sync** | Control Loop Fader | `[command]=[value]\n` | `motor=1200\n` |
 
-### 2. Monitoring Protocol (Device to Host)
-Your embedded microcontroller (STM32, ESP32, Arduino, PIC, etc.) must stream data in the following formats:
+### 2. Device Streaming Packet Parser (Hardware ➔ WPF)
 
-*   **System Log:**
+Stream outputs from your microcontroller using serial print statements:
+
+*   **Log Feed:**
     ```text
-    log=System Initialized Successfully\n
+    log=System Core Clock: 168MHz\n
     ```
-*   **Alarms (Bitmask or ID activation):**
+*   **Warning Alarms (Bitwise & Indexed Map):**
     ```text
-    Alarm=3\n  (Triggers Alarm index 3: "Low Batt")
+    Alarm=3\n  (Triggers index 3 -> "Low Batt" inside UI panel)
     ```
-*   **Chart Stream:**
+*   **ADC Chart Stream:**
     ```text
-    adc=2048\n
+    adc=2345\n
     ```
-*   **Text Indicators (with warning levels):**
+*   **Text Indicator with Warning Thresholds:**
     ```text
-    temp=36.4\n
+    temp=48.2\n  (Changes background to yellow warning threshold)
     ```
-*   **GPIO Register / Bitfield LEDs:**
+*   **LED Bits Port Register Map:**
     ```text
-    ready=3\n  (Binary 00000011 -> Turns on PWR and RUN LEDs)
+    ready=3\n  (Binary 00000011 -> Activates PWR and RUN pins)
     ```
 *   **Analog Gauge:**
     ```text
-    battery=85\n
+    battery=89\n
     ```
-*   **Multi-axis Table Data:**
+*   **IMU Matrix Tables:**
     ```text
-    imu=0.12,-0.85,9.81\n  (Mapped automatically to columns ax, ay, az)
+    imu=-0.04,1.01,0.08\n  (Maps directly into ax, ay, az columns)
     ```
 
 ---
 
-## 🚀 Getting Started
+## 🛠 Project Build & Structure
 
 ### Prerequisites
-*   Windows 10 / 11
-*   [.NET 8.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) or higher (to build)
+*   **OS:** Windows 10 / 11
+*   **Runtime:** [.NET 8.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) or later
+*   **IDE:** Visual Studio 2022
 
-### Installation & Run
-1. Clone the repository:
+### Repository Structure
+```text
+├── SerialDebugPanel.sln
+├── repo/                      <-- Place screenshots here
+│   ├── main_dashboard.png
+│   └── configurator_window.png
+├── Configs/                   <-- Dynamic JSON layouts live here
+│   └── device_config.json
+└── Source/
+    ├── ConfiguratorWindow.xaml      <-- UI Builder & Live Editor View
+    ├── ConfiguratorWindow.xaml.cs   <-- Controller logic, JSON Engine
+    └── Models/
+        ├── ControlItem.cs           <-- OOP structure for interactive commands
+        └── MonitorItem.cs           <-- OOP structure for indicator sensors
+```
+
+### Running the Application
+1. Clone the project:
    ```bash
    git clone https://github.com/yourusername/universal-serial-dashboard.git
-   cd universal-serial-dashboard
    ```
-2. Place your UI configuration file in `configs/config.json`.
-3. Build and Run:
+2. Navigate to the solution folder and compile:
    ```bash
    dotnet build
-   dotnet run --project YourProjectName
+   ```
+3. Run the executable:
+   ```bash
+   dotnet run --project SerialDebugPanel
    ```
 
 ---
 
 ## 🤝 Contributing
-Contributions are welcome! If you want to add new widgets (like 3D attitude renderers, map widgets, etc.), please open an issue or submit a Pull Request.
+Have ideas for complex widgets (like 3D Attitude indicators or customizable mapping tools)?
+1. Fork the project.
+2. Create your Feature Branch (`git checkout -b feature/NewWidget`).
+3. Commit your changes and Open a Pull Request!
 
 ## 📄 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```
